@@ -8,4 +8,9 @@
     {{ form.as_p }}
     <button type="submit">Téléverser</button>
 </form>
+
+{% if image %}
+    <img src="{{ image }}" alt="image" />
+{% endif %}
+
 {% endblock %}
