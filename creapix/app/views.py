@@ -19,7 +19,7 @@ def upload_file(request):
             image = grayscale(image)
             save_image(image)
 
-            return render(request, "app/upload.html", {"form": form, "image": path_image("output.png")})
+            return render(request, "app/upload.html", {"form": form, "image": path_output_image("output.png")})
     else:
         form = UploadFileForm()
 
