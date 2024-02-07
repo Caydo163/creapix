@@ -1,16 +1,37 @@
 {% extends 'base.html' %} {% load static %}
 {% block head %}
+    <script src="{% static 'js/form.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Téléverser</button>
-</form>
+<div class="d-flex justify-content-center align-items-center flex-column my-4">
+    <h1 class="mb-3">Modifier votre image</h1>
+    <form method="post" enctype="multipart/form-data" class="d-flex flex-column justify-content-center">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.file }}
+        </div>
+        <div class="mb-3">
+            {{ form.transform_type }}
+        </div>
 
-{% if image %}
-    <img src="{{ image }}" alt="image" />
-{% endif %}
-
+        <section id="parameters-zone">
+            <div class="parameters-group d-none" id="fusion">
+                <h3>Paramètre de la fusion</h3>
+                <div class="mb-3">
+                    
+                </div>
+            </div>
+            <div class="parameters-group d-none" id="resize">
+                <h3>Paramètre de redimensionnement</h3>
+            </div>
+        </section>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+    
+    {% if image %}
+        <h2 class="mt-3">Résultat</h2>
+        <img src="{{ image }}" alt="image" class="mt-3 img-fluid"/>
+    {% endif %}
+</div>
 {% endblock %}
