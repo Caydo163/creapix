@@ -1,14 +1,19 @@
 window.onload = (event) => {
     const select = document.querySelector('select[name="transform_type"');
 
-    select.addEventListener('change', (event) => {
+    function showParametersGroup(value) {
         document.querySelectorAll('.parameters-group').forEach((element) => {
-            console.log(element.id, element);
-            if (element.id == event.target.value) {
+            if (element.id == value) {
                 element.classList.remove('d-none');
             } else {
                 element.classList.add('d-none');
             }
         });
+    }
+
+    select.addEventListener('change', (event) => {
+        showParametersGroup(event.target.value);
     });
+
+    showParametersGroup(select.value);
 };

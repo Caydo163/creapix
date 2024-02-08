@@ -9,23 +9,39 @@
     <form method="post" enctype="multipart/form-data" class="d-flex flex-column justify-content-center">
         {% csrf_token %}
         <div class="mb-3">
-            {{ form.file }}
+            <label for="files" class="form-label">Images</label>
+            {{ form.files }}
         </div>
         <div class="mb-3">
-            {{ form.transform_type }}
+            <div class="mb-3">
+                <label for="transform_type" class="form-label">Type de transformation</label>
+                {{ form.transform_type }}
+            </div>
         </div>
 
         <section id="parameters-zone">
             <div class="parameters-group d-none" id="fusion">
                 <h3>Paramètre de la fusion</h3>
                 <div class="mb-3">
-                    
+                    <label for="fusion_ratio" class="form-label">Ratio</label>
+                    {{ form.fusion_ratio }}
                 </div>
             </div>
             <div class="parameters-group d-none" id="resize">
                 <h3>Paramètre de redimensionnement</h3>
+                <div class="mb-3">
+                    <label for="resize_width" class="form-label">Hauteur</label>
+                    {{ form.resize_width }}
+                </div>
+                <div class="mb-3">
+                    <label for="fusion_ratio" class="form-label">Largeur</label>
+                    {{ form.resize_height }}
+                </div>
             </div>
         </section>
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
+        {% endif %}
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
     

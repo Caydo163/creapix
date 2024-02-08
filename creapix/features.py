@@ -1,15 +1,9 @@
 from PIL import Image
 import numpy as np
 from pathlib import Path
-import matplotlib.pyplot as plt
-import os
 
 DIR_UPLOADS = Path(__file__).resolve().parent / 'media/uploads'
 DIR_OUTPUTS = Path(__file__).resolve().parent / 'media/outputs'
-COLORS = {
-    'black': (0,0,0),
-    'white': (255,255,255),
-}
 
 def open_image(filename):
     return Image.open(DIR_UPLOADS / filename)
@@ -25,13 +19,13 @@ def grayscale(image):
 
 def fusion(image1, image2, ratio):
     image1 = np.array(image1)
-    image2 = np.array(image2)
+    image2 = np.array(image2.resize(image1.shape[1::-1]))
 
-    fusionImage = ratio*image1 + (1-ratio)*image2
+    fusion_images = ratio*image1 + (1-ratio)*image2
 
-    fusionImage = fusionImage.astype(np.uint8)
+    fusion_images = fusion_images.astype(np.uint8)
 
-    return Image.fromarray(fusionImage)
+    return Image.fromarray(fusion_images)
 
 def resize(image, size):
     return image.resize(size)
