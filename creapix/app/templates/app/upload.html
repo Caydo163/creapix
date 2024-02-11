@@ -38,6 +38,13 @@
                     {{ form.resize_height }}
                 </div>
             </div>
+            <div class="parameters-group d-none" id="gif">
+                <h3>Paramètre du GIF</h3>
+                <div class="mb-3">
+                    <label for="fusion_ratio" class="form-label">Temps de transition (en ms)</label>
+                    {{ form.gif_duration }}
+                </div>
+            </div>
         </section>
         {% if error %}
             <p class="text-danger">{{ error }}</p>

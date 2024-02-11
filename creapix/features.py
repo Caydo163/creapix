@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 from pathlib import Path
+from datetime import datetime
 
 DIR_UPLOADS = Path(__file__).resolve().parent / 'media/uploads'
 DIR_OUTPUTS = Path(__file__).resolve().parent / 'media/outputs'
@@ -8,8 +9,15 @@ DIR_OUTPUTS = Path(__file__).resolve().parent / 'media/outputs'
 def open_image(filename):
     return Image.open(DIR_UPLOADS / filename)
 
-def save_image(image):
-    image.save(DIR_OUTPUTS / 'output.png')
+def save_image(image, type):
+    date = datetime.now().strftime('%Y%m%d%H%M%S')
+    extension = "gif" if type == "gif" else "png"
+    filename = f"output_{type}_{date}.{extension}"
+
+    if type != "gif":
+        image.save(DIR_OUTPUTS / filename)
+
+    return filename
 
 def path_output_image(filename):
     return '/media/outputs/' + filename
@@ -38,10 +46,12 @@ def black_and_white(image):
     return Image.fromarray(image)
 
 def animation(images, duration):
-    images = [open_image('image1.jpg'), open_image('image2.jpg')] # A supprimer
-    images = [np.array(image) for image in images]
-    images = [Image.fromarray(image) for image in images]
+    # images = [image.convert('RGBA') for image in images ] # Garde transparence mais résultat pas top
+    images = [image.convert('RGB') for image in images ] # On convertit les images en RGB pour éviter les problèmes de compatibilité
+    size = images[0].size
+    images = [image.resize(size) for image in images ] # On redimensionne les images pour qu'elles aient toutes la même taille
 
-    images[0].save(DIR_OUTPUTS / 'output.gif', save_all=True, append_images=images[1:], duration=duration, loop=0)
+    filename = save_image(images, "gif")
+    images[0].save(DIR_OUTPUTS / filename, save_all=True, append_images=images[1:], duration=duration, loop=0)
 
-    return images[0]
+    return filename

@@ -84,3 +84,18 @@ class UploadFileForm(forms.Form):
         ),
         label="Hauteur"
     )
+
+    # Gif parameters
+    gif_duration = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                "class": "form-control",
+                "type": "number",
+                "min": "0",
+                "step": "100",
+                "max": "10000",
+                "value": "500",
+            }
+        ),
+        label="Durée (en ms)"
+    )
