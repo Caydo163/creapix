@@ -45,6 +45,20 @@ def black_and_white(image):
 
     return Image.fromarray(image)
 
+def alignment(images, horizontal=True):
+    images = [image.convert('RGB') for image in images ] # On convertit les images en RGB pour éviter les problèmes de compatibilité
+    size = images[0].size
+    images = [image.resize(size) for image in images ] # On redimensionne les images pour qu'elles aient toutes la même taille
+
+    co = (len(images)*size[0], size[1]) if horizontal else (size[0], len(images)*size[1])
+    new_image = Image.new('RGB', co, (250, 250, 250))
+    for i in range(len(images)):
+        print(i)
+        co = (size[0]*i, 0) if horizontal else (0, size[1]*i)
+        new_image.paste(images[i], co)
+
+    return new_image
+
 def animation(images, duration):
     # images = [image.convert('RGBA') for image in images ] # Garde transparence mais résultat pas top
     images = [image.convert('RGB') for image in images ] # On convertit les images en RGB pour éviter les problèmes de compatibilité

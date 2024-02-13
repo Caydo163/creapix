@@ -39,9 +39,11 @@ def upload_file(request):
             case "gif":
                 duration = int(request.POST['gif_duration'])
                 filename = animation(images, duration)
+            case "alignment":
+                direction = True if request.POST['alignment_direction'] == "horizontal" else False
+                image = alignment(images, direction)
             case _:
                 image = images[0]
-
 
         if transform_type != "gif":
             filename = save_image(image, transform_type)

@@ -9,21 +9,10 @@ TYPE_CHOICES =(
     ("gif", "GIF"), 
 )
 
-# class MultipleFileInput(forms.ClearableFileInput):
-#     allow_multiple_selected = True
-
-# class MultipleFileField(forms.FileInput):
-#     def __init__(self, *args, **kwargs):
-#         kwargs.setdefault("widget", MultipleFileInput())
-#         super().__init__(*args, **kwargs)
-
-#     def clean(self, data, initial=None):
-#         single_file_clean = super().clean
-#         if isinstance(data, (list, tuple)):
-#             result = [single_file_clean(d, initial) for d in data]
-#         else:
-#             result = single_file_clean(data, initial)
-#         return result
+ALIGNMENT_DIRECTION_CHOICES = (
+    ("horizontal", "Horizontale"),
+    ("vertical", "Verticale"),
+)
 
 class UploadFileForm(forms.Form):
     files = forms.FileField(widget=forms.TextInput(
@@ -37,7 +26,7 @@ class UploadFileForm(forms.Form):
 
     transform_type = forms.ChoiceField(choices = TYPE_CHOICES,
         widget=forms.Select(attrs={
-                "class": "form-select",
+            "class": "form-select",
         }),
         label="Choisir un type de transformation"
     )
@@ -83,6 +72,14 @@ class UploadFileForm(forms.Form):
             }
         ),
         label="Hauteur"
+    )
+
+    # Alignment parameters
+    alignment_direction = forms.ChoiceField(choices=ALIGNMENT_DIRECTION_CHOICES,
+        widget=forms.Select(attrs={
+            "class": "form-select",
+        }),
+        label="Choisir la direction"
     )
 
     # Gif parameters
