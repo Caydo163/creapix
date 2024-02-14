@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import UploadFileForm
 from features import *
+import os
 
 # Create your views here.
 def index(request):
@@ -21,6 +22,7 @@ def upload_file(request):
                     destination.write(chunk)
             images.append(open_image(uploaded_file.name))
 
+        delete_images('outputs/')
 
         match transform_type:
             case "grayscale":
@@ -50,8 +52,17 @@ def upload_file(request):
         if transform_type != "gif":
             filename = save_image(image, transform_type)
 
+        delete_images('uploads/')
+
         return render(request, "app/upload.html", {"form": form, "image": path_output_image(filename)})
     else:
         form = UploadFileForm()
 
     return render(request, "app/upload.html", {"form": form})
+
+def delete_images(folder):
+    directory = "media/" + folder
+    for file in os.listdir(directory):
+        file_path = os.path.join(directory, file)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
