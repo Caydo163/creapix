@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="row mt-5 px-5 justify-content-center">
+<div class="row my-5 px-5 justify-content-center">
     <div class="col-6">
         <div class="card">
             <div class="card-body">
@@ -28,6 +28,14 @@
                         <div class="mb-3">
                             <label for="fusion_ratio" class="form-label">Ratio</label>
                             {{ form.fusion_ratio }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="fusion_ratio" class="form-label">Position x de la première image</label>
+                            {{ form.fusion_x }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="fusion_ratio" class="form-label">Position y de la deuxième image</label>
+                            {{ form.fusion_y }}
                         </div>
                     </div>
                     <div class="parameters-group d-none" id="resize">

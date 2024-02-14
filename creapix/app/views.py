@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import UploadFileForm
 from features import *
 
 # Create your views here.
-def index():
-    return HttpResponse("Hello, world. You're at the polls index.")
+def index(request):
+    return redirect("upload")
 
 def upload_file(request):
     if request.method == "POST":
@@ -31,7 +31,9 @@ def upload_file(request):
                 if len(images) < 2:
                     return render(request, "app/upload.html", {"form": form, "error": "Il faut deux images pour fusionner"})
                 ratio = float(request.POST['fusion_ratio'])
-                image = fusion(images[0], images[1], ratio)
+                x = int(request.POST['fusion_x'])
+                y = int(request.POST['fusion_y'])
+                image = fusion(images[0], images[1], ratio, x, y)
             case "resize":
                 width = int(request.POST['resize_width'])
                 height = int(request.POST['resize_height'])

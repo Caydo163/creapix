@@ -25,12 +25,17 @@ def path_output_image(filename):
 def grayscale(image):
     return image.convert('L')
 
-def fusion(image1, image2, ratio):
-    image1 = np.array(image1)
-    image2 = np.array(image2.resize(image1.shape[1::-1]))
+def fusion(image1, image2, ratio, x, y):
+    size = (max(image1.size[0], image2.size[0] + x), max(image1.size[1], image2.size[1] + y))
+    
+    new_image1 = Image.new('RGBA', size, (0, 0, 0, 0))  # Création d'une image vide
+    new_image1.paste(image1.convert('RGBA'), (0, 0))  # On colle l'image1 dans l'image vide (en haut à gauche)
 
-    fusion_images = ratio*image1 + (1-ratio)*image2
+    new_image2 = Image.new('RGBA', size, (0, 0, 0, 0))  # Création d'une image vide
+    new_image2.paste(image2.convert('RGBA'), (x, y))  # On colle l'image2 dans l'image vide (en bas à droite)
 
+    # On fusionne les deux images
+    fusion_images = ratio*np.array(new_image1) + (1-ratio)*np.array(new_image2)
     fusion_images = fusion_images.astype(np.uint8)
 
     return Image.fromarray(fusion_images)
@@ -50,10 +55,9 @@ def alignment(images, horizontal=True):
     size = images[0].size
     images = [image.resize(size) for image in images ] # On redimensionne les images pour qu'elles aient toutes la même taille
 
-    co = (len(images)*size[0], size[1]) if horizontal else (size[0], len(images)*size[1])
-    new_image = Image.new('RGB', co, (250, 250, 250))
+    size = (len(images)*size[0], size[1]) if horizontal else (size[0], len(images)*size[1])
+    new_image = Image.new('RGB', size, (250, 250, 250))
     for i in range(len(images)):
-        print(i)
         co = (size[0]*i, 0) if horizontal else (0, size[1]*i)
         new_image.paste(images[i], co)
 

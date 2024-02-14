@@ -28,7 +28,6 @@ class UploadFileForm(forms.Form):
         widget=forms.Select(attrs={
             "class": "form-select",
         }),
-        label="Choisir un type de transformation"
     )
 
     # Fusion parameters
@@ -43,7 +42,30 @@ class UploadFileForm(forms.Form):
                 "value": "0.5",
             }
         ),
-        label="Ratio"
+    )
+    fusion_x = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                "class": "form-control",
+                "type": "number",
+                "min": "0",
+                "step": "10",
+                "max": "10000",
+                "value": "0",
+            }
+        ),
+    )
+    fusion_y = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                "class": "form-control",
+                "type": "number",
+                "min": "0",
+                "step": "10",
+                "max": "10000",
+                "value": "0",
+            }
+        ),
     )
 
     # Resize parameters
@@ -58,7 +80,6 @@ class UploadFileForm(forms.Form):
                 "value": "300",
             }
         ),
-        label="Largeur"
     )
     resize_height = forms.IntegerField(
         widget=forms.NumberInput(
@@ -71,7 +92,6 @@ class UploadFileForm(forms.Form):
                 "value": "300",
             }
         ),
-        label="Hauteur"
     )
 
     # Alignment parameters
@@ -79,7 +99,6 @@ class UploadFileForm(forms.Form):
         widget=forms.Select(attrs={
             "class": "form-select",
         }),
-        label="Choisir la direction"
     )
 
     # Gif parameters
@@ -94,5 +113,4 @@ class UploadFileForm(forms.Form):
                 "value": "500",
             }
         ),
-        label="Durée (en ms)"
     )
