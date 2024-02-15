@@ -33,13 +33,13 @@ window.onload = (event) => {
         addImage(urlInput.value);
         
         let urlList = document.getElementById('id_url_list');
-        urlList.value += ',' + urlInput.value ;
+        urlList.value += '£$$£' + urlInput.value ;
 
         urlInput.value = '';
     };
 
     let urlList = document.getElementById('id_url_list');
-    urlList.value.split(',').forEach((url) => {
+    urlList.value.split('£$$£').forEach((url) => {
         if (url !== '') {
             addImage(url);
         }

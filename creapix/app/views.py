@@ -16,10 +16,15 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
 
         uploaded_files = request.FILES.getlist("files")
-        url_images = request.POST['url_list'][1:].split(',')
+        print(request.POST['url_list'])
+        print(request.POST['url_list'][4:])
+        url_images = request.POST['url_list'][4:].split('£$$£')
+        print(url_images)
         transform_type = request.POST["transform_type"]
 
-        if uploaded_files == [] and url_images == []:
+        print(uploaded_files, url_images)
+
+        if uploaded_files == [] and url_images == ['']:
             return render(request, "app/upload.html", {"form": form, "error": "Il faut au moins une image."})
 
         images = []
