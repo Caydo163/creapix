@@ -3,6 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import UploadFileForm
 from features import *
 import os
+import io
+import requests
+
 
 # Create your views here.
 def index(request):
@@ -13,9 +16,10 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
 
         uploaded_files = request.FILES.getlist("files")
+        url_images = request.POST['url_list'][1:].split(',')
         transform_type = request.POST["transform_type"]
 
-        if uploaded_files == []:
+        if uploaded_files == [] and url_images == []:
             return render(request, "app/upload.html", {"form": form, "error": "Il faut au moins une image."})
 
         images = []
@@ -24,6 +28,11 @@ def upload_file(request):
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
             images.append(open_image(uploaded_file.name))
+        
+        for url_image in url_images:
+            if url_image != "":
+                res = requests.get(url_image)
+                images.append(Image.open(io.BytesIO(res.content)))
 
         delete_images('outputs/')
 

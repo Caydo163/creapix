@@ -35,10 +35,13 @@ class UploadFileForm(forms.Form):
             attrs={
                 "class": "form-control",
                 "type": "url",
-                "placeholder": "https://example.com/image.jpg",
+                "aria-label": "Ajouter une image",
+                "aria-describedby": "add-button",
             }
         )
     ,required=False)
+
+    url_list = forms.CharField(widget=forms.TextInput(attrs={'hidden':'true'}), required=False)
 
     # Fusion parameters
     fusion_ratio = forms.FloatField(

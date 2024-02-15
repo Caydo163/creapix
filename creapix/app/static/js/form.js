@@ -15,43 +15,35 @@ window.onload = (event) => {
         showParametersGroup(event.target.value);
     });
 
-    let urlList = [];
-    
-    document.getElementById('addButton').onclick = () => {
-        
-        var hiddenDiv = document.getElementById('images');
+    function addImage(url) {
+        const hiddenDiv = document.getElementById('images');
 
-        var image = document.createElement('img');
-        image.src = document.getElementById('id_url').value;
+        let image = document.createElement('img');
+        image.src = url;
         image.width = 50;
         image.height = 50;
-        
+        image.classList.add('rounded', 'm-1');
+
         hiddenDiv.appendChild(image);
+    }
+
+    document.getElementById('add-button').onclick = () => {
+        const urlInput = document.getElementById('id_url');
+
+        addImage(urlInput.value);
         
-        urlList.push(image.src);
+        let urlList = document.getElementById('id_url_list');
+        urlList.value += ',' + urlInput.value ;
+
+        urlInput.value = '';
     };
 
-    document.getElementById('submit').onclick = () => {
-
-        var dataTransfer = new DataTransfer();
-
-        var files = document.getElementById('id_files').files;
-        let filesArray = Array.from(files);
-
-        urlList.forEach(function (url) {
-            fetch(url)
-            .then(res => res.blob())
-            .then(blob => {
-                let file = new File([blob], 'image.jpg', blob);
-                filesArray.push(file);
-            });
-        });
-        
-        filesArray.forEach(file => dataTransfer.items.add(file));
-
-        document.getElementById('id_files').files = dataTransfer.files;
-        console.log(document.getElementById('id_files').files);
-    }
+    let urlList = document.getElementById('id_url_list');
+    urlList.value.split(',').forEach((url) => {
+        if (url !== '') {
+            addImage(url);
+        }
+    });
 
     showParametersGroup(select.value);
 };

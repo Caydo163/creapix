@@ -15,14 +15,16 @@
                     <label for="files" class="form-label">Images</label>
                     {{ form.files }}
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                     <label for="url" class="form-label">URL</label>
-                    {{ form.url }}
+                    <div class="input-group mb-3">
+                        {{ form.url }}
+                        <button class="btn btn-outline-secondary" type="button" id="add-button">Ajouter une image</button>
+                    </div>
+                    {{ form.url_list }}
                 </div>
 
-                <div id="images"></div>
-
-                <button type="button" id="addButton" class="btn primary-bg-color text-white ">Ajouter une image</button>
+                <div id="images" class="mb-4"></div>
                 
                 <div class="mb-3">
                     <div class="mb-3">
