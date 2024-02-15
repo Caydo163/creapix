@@ -15,6 +15,9 @@ def upload_file(request):
         uploaded_files = request.FILES.getlist("files")
         transform_type = request.POST["transform_type"]
 
+        if uploaded_files == []:
+            return render(request, "app/upload.html", {"form": form, "error": "Il faut au moins une image."})
+
         images = []
         for uploaded_file in uploaded_files:
             with open("media/uploads/" + uploaded_file.name, "wb") as destination:

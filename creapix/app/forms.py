@@ -22,13 +22,23 @@ class UploadFileForm(forms.Form):
             "multiple": "true",
             "type": "File",
         }
-    ), label="Choisir une ou plusieurs images")
+    ), label="Choisir une ou plusieurs images", required=False)
 
     transform_type = forms.ChoiceField(choices = TYPE_CHOICES,
         widget=forms.Select(attrs={
             "class": "form-select",
         }),
     )
+
+    url = forms.URLField(
+        widget=forms.URLInput(
+            attrs={
+                "class": "form-control",
+                "type": "url",
+                "placeholder": "https://example.com/image.jpg",
+            }
+        )
+    ,required=False)
 
     # Fusion parameters
     fusion_ratio = forms.FloatField(

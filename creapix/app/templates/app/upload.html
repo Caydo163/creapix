@@ -16,6 +16,15 @@
                     {{ form.files }}
                 </div>
                 <div class="mb-3">
+                    <label for="url" class="form-label">URL</label>
+                    {{ form.url }}
+                </div>
+
+                <div id="images"></div>
+
+                <button type="button" id="addButton" class="btn primary-bg-color text-white ">Ajouter une image</button>
+                
+                <div class="mb-3">
                     <div class="mb-3">
                         <label for="transform_type" class="form-label">Type de transformation</label>
                         {{ form.transform_type }}
@@ -67,7 +76,7 @@
                 {% if error %}
                     <p class="text-danger">{{ error }}</p>
                 {% endif %}
-                <button type="submit" class="btn primary-bg-color text-white">Personnaliser mon image</button>
+                <button type="submit" id="submit" class="btn primary-bg-color text-white">Personnaliser mon image</button>
                 </form>
             </div>
           </div>
