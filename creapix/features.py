@@ -55,8 +55,8 @@ def alignment(images, horizontal=True):
     size = images[0].size
     images = [image.resize(size) for image in images ] # On redimensionne les images pour qu'elles aient toutes la même taille
 
-    size = (len(images)*size[0], size[1]) if horizontal else (size[0], len(images)*size[1])
-    new_image = Image.new('RGB', size, (250, 250, 250))
+    size_new_image = (len(images)*size[0], size[1]) if horizontal else (size[0], len(images)*size[1])
+    new_image = Image.new('RGB', size_new_image, (250, 250, 250))
     for i in range(len(images)):
         co = (size[0]*i, 0) if horizontal else (0, size[1]*i)
         new_image.paste(images[i], co)
