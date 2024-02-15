@@ -30,12 +30,20 @@ window.onload = (event) => {
     document.getElementById('add-button').onclick = () => {
         const urlInput = document.getElementById('id_url');
 
+        if(urlInput.value === '') { 
+            throw new Error('URL is required');
+        }
+
         addImage(urlInput.value);
         
         let urlList = document.getElementById('id_url_list');
         urlList.value += '£$$£' + urlInput.value ;
 
         urlInput.value = '';
+    };
+
+    document.getElementById('clear-button').onclick = () => {
+        clear();
     };
 
     let urlList = document.getElementById('id_url_list');
@@ -46,4 +54,11 @@ window.onload = (event) => {
     });
 
     showParametersGroup(select.value);
+
+    function clear() {
+        const hiddenDiv = document.getElementById('images');
+        hiddenDiv.innerHTML = '';
+        document.getElementById('id_url_list').value = '';
+        document.getElementById('id_files').value = '';
+    }
 };
